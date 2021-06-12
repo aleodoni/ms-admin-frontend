@@ -36,7 +36,7 @@ export default function Login() {
             <div className="px-5 pb-8">
               <button
                 type="submit"
-                className="inline-flex justify-center w-full py-2 px-4 border border-transparent shadow-lg text-lg font-medium rounded-sm bg-light-green bg-opacity-80 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 text-gray-800"
+                className="inline-flex justify-center w-full py-3 px-4 border border-light-green border-opacity-30 shadow-lg text-lg font-medium rounded-sm bg-light-green bg-opacity-80 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 text-gray-800 transition-all duration-200"
               >
                 Login
               </button>
