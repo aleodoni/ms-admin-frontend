@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -9,12 +9,17 @@ module.exports = {
         'light-blue': '#A8DADC',
         'light-green': '#F1FAEE',
         'medium-green': '#2A9D8F',
-        'red': '#E63946',
-      }
+        red: '#E63946',
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      cursor: ['disabled'],
+      pointerEvents: ['disabled'],
+      backgroundColor: ['disabled'],
+      backgroundOpacity: ['disabled'],
+    },
   },
   plugins: [],
-}
+};
