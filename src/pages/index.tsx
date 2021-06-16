@@ -38,7 +38,7 @@ const Login: NextPage = () => {
         await checkPermission({
           userId: freshUser.id,
           system: 'ADMIN_SYS',
-          role: 'ADMIN',
+          roles: ['ADMIN'],
         });
 
         if (hasPermission()) {

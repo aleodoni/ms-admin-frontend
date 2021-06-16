@@ -7,7 +7,7 @@ import { api } from '../services/api.service';
 type Permission = {
   userId: number;
   system: string;
-  role: string;
+  roles: string[];
 };
 
 type State = {
@@ -15,7 +15,7 @@ type State = {
   error: boolean;
   hasPermission: boolean;
 
-  checkPermission: ({ userId, system, role }: Permission) => Promise<boolean>;
+  checkPermission: ({ userId, system, roles }: Permission) => Promise<boolean>;
   getPermission: () => boolean;
 };
 
@@ -24,7 +24,7 @@ const rbacStore = create<State>((set, get) => ({
   error: false,
   hasPermission: false,
 
-  checkPermission: async ({ userId, system, role }: Permission): Promise<boolean> => {
+  checkPermission: async ({ userId, system, roles }: Permission): Promise<boolean> => {
     set({ loading: true });
 
     // Call api passing parameters
@@ -33,7 +33,7 @@ const rbacStore = create<State>((set, get) => ({
       const hasPermission = await api.post('rbac/check-permission', {
         userId: String(userId),
         system,
-        role,
+        roles,
       });
 
       // console.log(hasPermission.data);
@@ -41,8 +41,8 @@ const rbacStore = create<State>((set, get) => ({
       set({ hasPermission: hasPermission.data });
       return hasPermission.data;
     } catch (err) {
-      error('Permission denied.');
-      console.log(err);
+      // error('Permission denied.');
+      console.log(err.message);
       console.log(err);
 
       set({ error: err, hasPermission: false });
