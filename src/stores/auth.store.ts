@@ -28,12 +28,25 @@ type State = {
 
   signIn: ({ username, password }: Credentials) => Promise<void>;
   getUser: () => User | null;
+  setLoading: (status: boolean) => void;
 };
+
+let restoredUser: string | null = null;
+
+if (typeof window !== 'undefined') {
+  restoredUser = localStorage.getItem('@AUTH:user');
+}
+
+let parsedUser: User | null = null;
+
+if (restoredUser) {
+  parsedUser = JSON.parse(restoredUser);
+}
 
 const authStore = create<State>((set, get) => ({
   loading: false,
   error: false,
-  user: null,
+  user: parsedUser,
   access_token: null,
 
   signIn: async ({ username, password }: Credentials) => {
@@ -49,7 +62,7 @@ const authStore = create<State>((set, get) => ({
       // Get response data
       const { access_token, user } = response.data;
 
-      set({ user, access_token });
+      set({ user, access_token, loading: false });
       success('Logged successfully.');
 
       // Save response data into local storage and store
@@ -57,9 +70,6 @@ const authStore = create<State>((set, get) => ({
       localStorage.setItem('@AUTH:user', JSON.stringify(user));
     } catch (err) {
       error('Incorrect username/password.');
-      console.log(err.response.status);
-      console.log(err.response.data.error);
-
       set({ user: null, error: err });
     } finally {
       set({ loading: false });
@@ -68,6 +78,10 @@ const authStore = create<State>((set, get) => ({
 
   getUser: () => {
     return get().user;
+  },
+
+  setLoading: (status) => {
+    set({ loading: status });
   },
 }));
 
