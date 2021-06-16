@@ -6,12 +6,12 @@ import Spinner from '../Spinner';
 
 type Props = {
   system: string;
-  role: string;
+  roles: string[];
   permission?: string;
   children: JSX.Element;
 };
 
-export default function RbacChecker({ children, system, role, permission }: Props): JSX.Element {
+export default function RbacChecker({ children, system, roles, permission }: Props): JSX.Element {
   const user = authStore((state) => state.user);
   const checkPermission = rbacStore((state) => state.checkPermission);
   const hasPermission = rbacStore((state) => state.getPermission);
@@ -22,7 +22,7 @@ export default function RbacChecker({ children, system, role, permission }: Prop
       await checkPermission({
         userId: id,
         system: system,
-        role: role,
+        roles: roles,
       });
     }
 
@@ -41,7 +41,7 @@ export default function RbacChecker({ children, system, role, permission }: Prop
     } else {
       setRet(<Login />);
     }
-  }, [user, children, checkPermission, hasPermission, role, system]);
+  }, [user, children, checkPermission, hasPermission, roles, system]);
 
   return ret;
 }
