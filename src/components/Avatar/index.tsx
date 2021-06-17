@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 
 const Avatar: React.FC = () => {
