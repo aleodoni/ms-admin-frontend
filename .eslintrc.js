@@ -45,6 +45,8 @@ module.exports = {
         // Why would you want unused vars?
         '@typescript-eslint/no-unused-vars': 'off',
 
+        'jsx-a11y/aria-role': 'off',
+
         // I suggest this setting for requiring return types on functions only where useful
         '@typescript-eslint/explicit-function-return-type': [
           'warn',
