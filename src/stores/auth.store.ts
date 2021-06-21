@@ -29,6 +29,7 @@ type State = {
   signIn: ({ username, password }: Credentials) => Promise<void>;
   getUser: () => User | null;
   setLoading: (status: boolean) => void;
+  signOut: () => Promise<void>;
 };
 
 let restoredUser: string | null = null;
@@ -82,6 +83,17 @@ const authStore = create<State>((set, get) => ({
 
   setLoading: (status) => {
     set({ loading: status });
+  },
+
+  signOut: async () => {
+    set({ loading: true });
+
+    localStorage.removeItem('@AUTH:user');
+    localStorage.removeItem('@AUTH:access_token');
+
+    set({ user: null });
+
+    set({ loading: false });
   },
 }));
 

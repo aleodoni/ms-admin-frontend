@@ -1,21 +1,18 @@
 import React, { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 
+import authStore from '../../stores/auth.store';
+
 const Avatar: React.FC = () => {
-  const profile = [
-    {
-      text: 'Your Profile',
-      link: '#',
-    },
-    {
-      text: 'Sign out',
-      link: '/',
-    },
-  ];
+  const signOut = authStore((state) => state.signOut);
 
   function classNames(...classes: string[]): string {
     return classes.filter(Boolean).join(' ');
+  }
+
+  async function handleLogout(): Promise<void> {
+    await signOut();
   }
 
   return (
@@ -46,24 +43,39 @@ const Avatar: React.FC = () => {
               static
               className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
-              {profile.map((item) => (
-                <Menu.Item key={item.text}>
-                  {({ active }) => (
-                    <span>
-                      <Link href={item.link}>
-                        <a
-                          className={classNames(
-                            active ? 'bg-gray-100' : '',
-                            'block px-4 py-2 text-sm text-gray-700'
-                          )}
-                        >
-                          {item.text}
-                        </a>
-                      </Link>
-                    </span>
-                  )}
-                </Menu.Item>
-              ))}
+              <Menu.Item>
+                {({ active }) => (
+                  <span>
+                    <Link href="#">
+                      <a
+                        className={classNames(
+                          active ? 'bg-gray-100' : '',
+                          'block px-4 py-2 text-sm text-gray-700'
+                        )}
+                      >
+                        Your Profile
+                      </a>
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <span>
+                    <Link href="#">
+                      <a
+                        onClick={() => handleLogout()}
+                        className={classNames(
+                          active ? 'bg-gray-100' : '',
+                          'block px-4 py-2 text-sm text-gray-700'
+                        )}
+                      >
+                        Logout
+                      </a>
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
             </Menu.Items>
           </Transition>
         </>
